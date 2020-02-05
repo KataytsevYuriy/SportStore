@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Product>
+
+<h3 class="p-3 bg-primary text-white text-center">Products</h3>
+
+<div class="text-center">
+    @await Html.PartialAsync("Pages",Model)
+</div>
+
+<div class="container-fluid mt-3">
+    @if (ViewBag.UpdateAll != true)
+    {
+        <div class="row">
+            <div class="col font-weight-bold">Id</div>
+            <div class="col font-weight-bold">Name</div>
+            <div class="col font-weight-bold">Category</div>
+            <div class="col font-weight-bold">Purchase Price</div>
+            <div class="col font-weight-bold">Retail Price</div>
+            <div class="col"></div>
+        </div>
+
+        @foreach (Product p in Model)
+        {
+            <div class="row p-2">
+                <div class="col">@p.Id</div>
+                <div class="col">@p.Name</div>
+                <div class="col">@p.Category.Name</div>
+                <div class="col">@p.PurchasePrice</div>
+                <div class="col">@p.RetailPrice</div>
+                <div class="col">
+                    <form asp-action="Delete" method="post">
+                        <a asp-action="UpdateProduct" asp-route-key="@p.Id" class="btn btn-outline-primary">Edit</a>
+                        <input type="hidden" name="Id" value="@p.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        }
+
+    }
+    <div class="p-2 text-center"><a asp-action="UpdateProduct" asp-route-Key="0" class="btn btn-primary">Add</a></div>
+</div>
